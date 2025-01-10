@@ -69,6 +69,7 @@ endif()
 
 install(DIRECTORY
   example
+  launch
   DESTINATION share/${PROJECT_NAME}
 )
 

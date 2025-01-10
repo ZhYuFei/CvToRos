@@ -1,4 +1,4 @@
-#include "cvtoros/img_projector.hpp"
+#include "cv_to_ros/img_projector.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -19,7 +19,7 @@ projector::projector(const rclcpp::NodeOptions & options)
   
   pub_debug_src = create_publisher<sensor_msgs::msg::Image>("/projector/picture", 1);
   
-  cap = cv::VideoCapture("cv_to_ros/example/test.mp4");
+  cap = cv::VideoCapture("example/test.mp4");
 
   timer_ = create_wall_timer(20ms, std::bind(&projector::on_timer, this));
 
@@ -44,6 +44,8 @@ void projector::on_timer()
   auto msg_img = cv_bridge::CvImage(msg_debug_src.header, "bgr8", src).toImageMsg();
   
   pub_debug_src->publish(*msg_img);
+
+  RCLCPP_INFO(this->get_logger(), "Data send");
 }
 
 }  // namespace cv_to_ros
